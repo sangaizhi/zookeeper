@@ -9,7 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>demo-lock</artifactId>
+    <artifactId>zookeeper-cmd</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -35,11 +36,5 @@
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.101tec</groupId>
-            <artifactId>zkclient</artifactId>
-        </dependency>
     </dependencies>
-
-
 </project>

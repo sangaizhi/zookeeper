@@ -131,12 +131,10 @@ public abstract class BaseDistributedLock {
                     // 采用 CountDownLatch 阻塞当前线程，知道次小节点被删除
                     final CountDownLatch latch = new CountDownLatch(1);
                     final IZkDataListener prevNodeListener = new IZkDataListener() {
-                        @Override
                         public void handleDataChange(String s, Object o) throws Exception {
                             latch.countDown();
                         }
 
-                        @Override
                         public void handleDataDeleted(String s) throws Exception {
 
                         }
