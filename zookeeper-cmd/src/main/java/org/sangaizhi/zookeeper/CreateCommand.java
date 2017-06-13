@@ -16,16 +16,16 @@
  */
 package org.sangaizhi.zookeeper;
 
+import java.io.IOException;
+
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.sangaizhi.zookeeper.factory.Connector;
 
-import java.io.IOException;
-import java.util.List;
-
 /**
+ * 创建节点的示例
  * @name CreateCommand
  * @author sangaizhi
  * @date 2017/6/11  15:13
@@ -40,8 +40,16 @@ public class CreateCommand {
     public void create(String nodePath) throws KeeperException, InterruptedException {
         nodePath = "/"+ nodePath;
         if(zk.exists(nodePath,false) == null){
-            zk.create(nodePath, "my node".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-            System.out.println("create node :" + nodePath);
+            /**
+             * 创建持久节点,参数：
+             *  path: 路径，用字符串表示
+             *  data: node 的内容
+             *  acl: 访问控制列表，
+             *  createMode: 节点的类型
+             *  返回值：Zookeeper 所创建的路径
+             */
+            String path = zk.create(nodePath, "my node".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+            System.out.println("create node :" + path);
         }else{
             System.out.println(nodePath +" 已存在");
         }

@@ -36,15 +36,25 @@ public class ListCommand  {
     private static ZooKeeper zk;
 
     public void list(String nodeName){
-        String nodePath = "/" + nodeName;
+        if(!nodeName.startsWith("/")){
+            nodeName = "/" + nodeName;
+        }
         try {
-            List<String> children = zk.getChildren(nodePath, false);
+            // 列出节点的子节点列表，参数为节点的路径和观察标志，如果设置了观察表示，那么一旦该 node 的状态改变，关联的观察会被触发
+            List<String> children = zk.getChildren(nodeName, false);
             if(children.isEmpty()){
-                System.out.println(String.format("No children Node in group %s", nodeName));
-                System.exit(1);
+//                System.out.println(String.format("No children Node in group %s", nodeName));
+//                System.exit(1);
             }
             for(String child : children){
-                System.out.println(child);
+                if(!"/".equals(nodeName)){
+                    System.out.println(nodeName + "/" + child);
+                    list(nodeName + "/" + child);
+                }else{
+                    System.out.println("/"+child);
+                    list(child);
+                }
+
             }
         }catch (KeeperException.NoNodeException e){
             e.printStackTrace();
@@ -60,7 +70,8 @@ public class ListCommand  {
         Connector connector = new Connector();
         zk = connector.connect(hosts);
         ListCommand command = new ListCommand();
-        command.list("");
+        command.list("/");
+        connector.close(zk);
     }
 
 }

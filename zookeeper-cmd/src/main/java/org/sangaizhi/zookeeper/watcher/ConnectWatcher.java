@@ -33,6 +33,11 @@ public class ConnectWatcher extends MyWatcher {
     public  ConnectWatcher(CountDownLatch countDownLatch){
         this.countDownLatch = countDownLatch;
     }
+
+    /**
+     * 客户端与 Zookeeper 建立连接后，该方法就会被调用
+     * @param watchedEvent 连接的事件
+     */
     public void process(WatchedEvent watchedEvent) {
         if(watchedEvent.getState() == Event.KeeperState.SyncConnected){
             System.out.println("创建连接完成");
