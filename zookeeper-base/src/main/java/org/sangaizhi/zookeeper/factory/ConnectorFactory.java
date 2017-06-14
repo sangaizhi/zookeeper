@@ -30,7 +30,7 @@ import java.io.IOException;
  */
 public abstract class ConnectorFactory {
 
-    public abstract   ZooKeeper connect(String hosts) throws IOException, InterruptedException;
+    public abstract ZooKeeper connect(String hosts) throws IOException, InterruptedException;
 
     public abstract void close(ZooKeeper zooKeeper) throws InterruptedException ;
 }

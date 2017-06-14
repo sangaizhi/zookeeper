@@ -19,7 +19,6 @@ package org.sangaizhi.zookeeper.factory;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 import org.sangaizhi.zookeeper.watcher.ConnectWatcher;
 
@@ -36,8 +35,8 @@ public class Connector extends ConnectorFactory {
 
     @Override
     public ZooKeeper connect(String hosts) throws IOException, InterruptedException {
-        // 创建 Zookeeper 类的对象，该类会负责维护客户端和Zookeeper服务之间的连接。
         /**
+         * 创建 Zookeeper 类的对象，该类会负责维护客户端和Zookeeper服务之间的连接
          *  Zookeeper 的构造函数共有三个参数：
          *      connectString： Zookeeper 服务的主机地址，可指定端口，默认端口是2181
          *      sessionTimeout：会话超时参数，单位为毫秒
