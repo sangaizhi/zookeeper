@@ -47,8 +47,8 @@ public class Connector extends ConnectorFactory {
          *  来防止程序直接使用新建的 Zookeeper, 知道 Zookeeper 对象已经准备就绪
          */
 
-        ZooKeeper zooKeeper = new ZooKeeper(hosts, SESSION_TIMEOUT, new ConnectWatcher(countDownLatch));
         System.out.println("正在创建连接");
+        ZooKeeper zooKeeper = new ZooKeeper(hosts, SESSION_TIMEOUT, new ConnectWatcher(countDownLatch));
         countDownLatch.await();
         return zooKeeper;
     }
