@@ -14,11 +14,11 @@
  * 修改人员：
  * 修改说明：
  */
-package org.sangaizhi.zookeeper;
+package org.sangaizhi.zookeeper.cmd;
 
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooKeeper;
-import org.sangaizhi.zookeeper.factory.Connector;
+import org.sangaizhi.zookeeper.base.factory.Connector;
 
 import java.io.IOException;
 import java.util.List;

@@ -14,14 +14,14 @@
  * 修改人员：
  * 修改说明：
  */
-package org.sangaizhi.zookeeper;
-
-import java.io.IOException;
+package org.sangaizhi.zookeeper.service;
 
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.data.Stat;
-import org.sangaizhi.zookeeper.watcher.MyWatcher;
+import org.sangaizhi.zookeeper.base.watcher.MyWatcher;
+
+import java.io.IOException;
 
 /**
  * @name KVWatcher
@@ -29,9 +29,9 @@ import org.sangaizhi.zookeeper.watcher.MyWatcher;
  * @date 2017/6/13  23:09
  * @version 1.0
  */
-public class ChangedKVWatcher extends MyWatcher {
+public class KVWatcher extends MyWatcher {
 
-    private ChangedKVStore changedKVStore;
+    private KeyValueStore keyValueStore;
     public void process(WatchedEvent watchedEvent) {
 
         /**
@@ -49,19 +49,19 @@ public class ChangedKVWatcher extends MyWatcher {
         }
     }
 
-    public ChangedKVWatcher(String hosts) throws IOException, InterruptedException {
-        changedKVStore = new ChangedKVStore(hosts);
+    public KVWatcher(String hosts) throws IOException, InterruptedException {
+        keyValueStore = new KeyValueStore(hosts);
     }
 
     public void displayKV() throws KeeperException, InterruptedException {
         Stat stat = new Stat();
-        String value = changedKVStore.read(ResilientConfigUpdater.PATH, this, stat);
-        System.out.println(String.format("Read %s as %s", ResilientConfigUpdater.PATH, value));
-        System.out.println(String.format("%s version is %s", ResilientConfigUpdater.PATH, stat.getVersion()));
+        String value = keyValueStore.read(KVUpdate.PATH, this, stat);
+        System.out.println(String.format("Read %s as %s", KVUpdate.PATH, value));
+        System.out.println(String.format("%s version is %s", KVUpdate.PATH, stat.getVersion()));
     }
 
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
-        ChangedKVWatcher watcher = new ChangedKVWatcher(ChangedKVStore.HOST);
+        KVWatcher watcher = new KVWatcher(KeyValueStore.HOST);
         watcher.displayKV();
         Thread.sleep(Long.MAX_VALUE);
     }

@@ -14,7 +14,7 @@
  * 修改人员：
  * 修改说明：
  */
-package org.sangaizhi.zookeeper;
+package org.sangaizhi.zookeeper.service;
 
 import org.apache.zookeeper.KeeperException;
 
