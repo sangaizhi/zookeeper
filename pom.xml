@@ -13,6 +13,7 @@
         <module>zookeeper-cmd</module>
         <module>zookeeper-service</module>
         <module>zookeeper-base</module>
+        <module>zookeeper-exception</module>
     </modules>
 
     <properties>

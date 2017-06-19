@@ -30,7 +30,7 @@ import org.sangaizhi.zookeeper.watcher.ConnectWatcher;
  */
 public class Connector extends ConnectorFactory {
 
-    private static final int SESSION_TIMEOUT = 50000;
+    private static final int SESSION_TIMEOUT = 5000;
     private CountDownLatch countDownLatch = new CountDownLatch(1);
 
     @Override
