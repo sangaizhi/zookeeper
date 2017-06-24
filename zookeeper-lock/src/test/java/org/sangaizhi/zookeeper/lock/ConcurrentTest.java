@@ -78,8 +78,9 @@ public class ConcurrentTest {
                         list.add(end);
                     } catch (Exception e) {
                         err.getAndIncrement();//相当于err++
+                    }finally {
+                        doneSignal.countDown();
                     }
-                    doneSignal.countDown();
                 }
             }).start();
         }

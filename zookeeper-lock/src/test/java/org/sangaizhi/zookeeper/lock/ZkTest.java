@@ -16,7 +16,7 @@
  */
 package org.sangaizhi.zookeeper.lock;
 
-import org.junit.Test;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @name ZkTest
@@ -33,10 +33,10 @@ private static final String host = "192.168.0.21:2181";
 
     public static void testSingleTask(){
         Runnable task1 = () -> {
-            DistributeLock lock = null;
+            DistributedLock lock = null;
             try {
-                lock = new DistributeLock(host,"test1");
-                lock.lock();
+                lock = new SimpleDistributedLock("/myLock","test2");
+                lock.acquire();
                 Thread.sleep(3000);
                 System.out.println("===Thread " + Thread.currentThread().getId() + " running");
             } catch (Exception e) {
@@ -44,7 +44,11 @@ private static final String host = "192.168.0.21:2181";
             }
             finally {
                 if(lock != null)
-                    lock.unlock();
+                    try {
+                        lock.release();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
             }
         };
         new Thread(task1).start();
@@ -53,22 +57,25 @@ private static final String host = "192.168.0.21:2181";
     public static void testBatchTask(){
         ConcurrentTest.ConcurrentTask[] tasks = new ConcurrentTest.ConcurrentTask[60];
         for(int i=0;i<tasks.length;i++){
-            ConcurrentTest.ConcurrentTask task3 = new ConcurrentTest.ConcurrentTask(){
+            ConcurrentTest.ConcurrentTask task = new ConcurrentTest.ConcurrentTask(){
                 public void run() {
-                    DistributeLock lock = null;
+                    DistributedLock lock = null;
                     try {
-                        lock = new DistributeLock(host,"test2");
-                        lock.lock();
-                        System.out.println("Thread " + Thread.currentThread().getId() + " running");
+                        lock = new SimpleDistributedLock("/myLock","test2");
+                        lock.acquire();
+                        TimeUnit.SECONDS.sleep(1L);
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }
-                    finally {
-                        lock.unlock();
+                    } finally {
+                        try {
+                            lock.release();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             };
-            tasks[i] = task3;
+            tasks[i] = task;
         }
         new ConcurrentTest(tasks);
     }

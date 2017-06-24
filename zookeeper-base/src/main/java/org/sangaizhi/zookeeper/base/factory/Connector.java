@@ -31,10 +31,9 @@ import org.sangaizhi.zookeeper.base.watcher.ConnectWatcher;
 public class Connector extends ConnectorFactory {
 
     private static final int SESSION_TIMEOUT = 5000;
-    private CountDownLatch countDownLatch = new CountDownLatch(1);
+    private static CountDownLatch countDownLatch = new CountDownLatch(1);
 
-    @Override
-    public ZooKeeper connect(String hosts) throws IOException, InterruptedException {
+    public static ZooKeeper connect(String hosts) throws IOException, InterruptedException {
         /**
          * 创建 Zookeeper 类的对象，该类会负责维护客户端和Zookeeper服务之间的连接
          *  Zookeeper 的构造函数共有三个参数：
@@ -53,7 +52,6 @@ public class Connector extends ConnectorFactory {
         return zooKeeper;
     }
 
-    @Override
     public void close(ZooKeeper zooKeeper) throws InterruptedException {
         System.out.println("关闭连接");
         zooKeeper.close();

@@ -136,7 +136,7 @@ public abstract class BaseDistributedLock {
                         }
 
                         public void handleDataDeleted(String s) throws Exception {
-
+                            latch.countDown();
                         }
                     };
                     try{
