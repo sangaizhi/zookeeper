@@ -1,0 +1,11 @@
+一、Zookeeper 队列管理
+    Zookeeper 可以管理两种类型的队列：
+    ①、同步队列：只有队列的成员都聚齐时，队列才可用，否则一直等待所有成员到达。
+    ②、FIFO队列：队列按照FIFO的方式入队和出队。
+
+    1、Zookeeper 管理同步队列
+       思路：创建一个父目录 /syncQueue, 每一个队列成员都监控目录 /syncQueue/start (监控标志)是否存在，然后每个成员都加入
+             这个队列（通过创建 /syncQueue/member_i 的临时目录节点），然后每个成员获取 /sync 目录的所有子节点，也就是
+             member_i，判断 i 的值是否已经是成员的个数，如果小于成员个数就等待 /syncQueue/start的出现，如果已经相等就创建
+             /syncQueue/start.
+        流程图参考:Zookeeper_同步队列流程图.png

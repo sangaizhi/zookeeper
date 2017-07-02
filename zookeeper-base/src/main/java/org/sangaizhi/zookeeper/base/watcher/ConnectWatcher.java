@@ -40,7 +40,7 @@ public class ConnectWatcher extends MyWatcher {
      */
     public void process(WatchedEvent watchedEvent) {
         if(watchedEvent.getState() == Event.KeeperState.SyncConnected){
-            System.out.println("创建连接完成");
+            System.out.println("创建连接完成:" + watchedEvent.getWrapper());
             countDownLatch.countDown();
         }
     }
