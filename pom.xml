@@ -15,6 +15,7 @@
         <module>zookeeper-base</module>
         <module>zookeeper-exception</module>
         <module>zookeeper-lock</module>
+        <module>zookeeper-cluster</module>
     </modules>
 
     <properties>
